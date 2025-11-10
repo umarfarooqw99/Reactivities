@@ -1,3 +1,5 @@
+//ordering doesn't matter for services, but for middleware it does
+
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -11,7 +13,11 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Services.AddCors();
+
 var app = builder.Build();
+
+app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000", "https://localhost:3000"));
 
 app.MapControllers();
 
