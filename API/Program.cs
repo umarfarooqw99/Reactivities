@@ -1,5 +1,7 @@
 //ordering doesn't matter for services, but for middleware it does
 
+using Application.Activities.Queries;
+using Application.Core;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -14,6 +16,8 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 });
 
 builder.Services.AddCors();
+builder.Services.AddMediatR(x => x.RegisterServicesFromAssemblyContaining<GetActivitiesList>());
+builder.Services.AddAutoMapper(typeof (MappingProfiles).Assembly);
 
 var app = builder.Build();
 
