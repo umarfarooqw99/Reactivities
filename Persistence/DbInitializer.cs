@@ -5,13 +5,12 @@ namespace Persistence;
 
 public class DbInitializer
 {
-    public static async Task SeedData(AppDbContext context)
+    public static async Task SeedData(AppDbContext appDbContext)
     {
-        if (context.Activities.Any()) return;
-
-        var actvities = new List<Activity>
+        if(appDbContext.Activities.Any()) return;
+        var activities = new List<Activity>
         {
-new() {
+            new() {
                 Title = "Past Activity 1",
                 Date = DateTime.Now.AddMonths(-2),
                 Description = "Activity 2 months ago",
@@ -118,8 +117,7 @@ new() {
                 Longitude = -0.781404
             }
         };
-
-        context.Activities.AddRange(actvities);
-        await context.SaveChangesAsync();
+        appDbContext.AddRange(activities);
+        await appDbContext.SaveChangesAsync();
     }
 }
